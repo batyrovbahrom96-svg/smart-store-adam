@@ -1,0 +1,3 @@
+2025-11-01 12:22:22,928 | INFO | customers_data.csv loaded with shape (201, 4)
+2025-11-01 12:22:22,935 | INFO | products_data.csv loaded with shape (100, 4)
+2025-11-01 12:22:22,944 | INFO | sales_data.csv loaded with shape (2001, 7)

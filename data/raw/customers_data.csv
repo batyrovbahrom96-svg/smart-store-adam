@@ -1,5 +1,5 @@
-CustomerID,Name,Region,JoinDate
-1000,Robert Gomez,West,2024-02-25
+CustomerID,Name,Region,JoinDate,LoyaltyPoints,CustomerSegment     
+1000,Robert Gomez,West,2024-02-25         
 1001,John Silva,East,2020-12-01
 1002,Mark Marshall,Central,2020-08-08
 1003,David Brennan,North,2020-05-21

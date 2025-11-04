@@ -18,12 +18,15 @@ def prepare_customers():
     # Drop duplicates
     df.drop_duplicates(inplace=True)
 
-    # Drop rows with missing values
-    df.dropna(inplace=True)
+    # Drop rows where all values are missing
+    df.dropna(how='all', inplace=True)
 
-    # Remove outliers for LoyaltyPoints (example: > 10000 points)
+    # Clean LoyaltyPoints if the column exists
     if "LoyaltyPoints" in df.columns:
-        df = df[df["LoyaltyPoints"] < 10000]
+        df["LoyaltyPoints"] = pd.to_numeric(df["LoyaltyPoints"], errors="coerce")
+        # Only apply filter if the column has at least one valid value
+        if df["LoyaltyPoints"].notna().sum() > 0:
+            df = df[df["LoyaltyPoints"] < 10000]
 
     # Save prepared file
     os.makedirs(os.path.dirname(PREPARED_PATH), exist_ok=True)
@@ -31,5 +34,6 @@ def prepare_customers():
     print(f"Prepared records: {len(df)}")
     print("Customers data cleaned and saved.")
 
+# Run the function only if the script is executed directly
 if __name__ == "__main__":
     prepare_customers()

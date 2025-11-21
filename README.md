@@ -1,69 +1,102 @@
+FINAL README.md FOR SUBMISSION
+Cross-Platform Reporting with Power BI
+Operating System
 
-# SMART STORE ANALYTICS PROJECT
-DATA WAREHOUSE IMPLEMENTATION (P4)
+Windows 11
 
-Overview
-This project prepares, cleans, and loads sales data into a small data warehouse.
-The goal is to support analysis, reporting, and business decisions.
-The workflow follows five stages: design, build, load, verify, and document.
+Tool
 
-Business Goal
-Help the store understand customers, products, and sales.
-Support queries about revenue, regions, customer activity, and product demand.
+Power BI Desktop
 
-Data Warehouse Schema
-The warehouse uses a star schema.
-One fact table: sale.
-Two dimension tables: customer and product.
+Project Summary
 
-Table Definitions
-customer
-customer_id
-name
-region
-join_date
+The goal of this reporting project was to connect to the data warehouse created in P4 and perform core OLAP operations, including slicing, dicing, and drilldown. All analysis and visualizations were completed in Power BI Desktop.
 
-product
-product_id
-product_name
-category
+SQL and Data Model
 
-sale
-sale_id
-customer_id
-product_id
-sale_amount
-sale_date
+The dataset was imported from the data warehouse using ODBC.
+Tables used: customer, product, sale.
 
-ETL Process
-The script etl_to_dw.py creates the schema, removes the old database, loads cleaned CSV files, and inserts all rows.
-The ETL runs in three steps: create schema, delete old rows, insert new data.
+Model View confirms all tables and relationships.
 
-Files Used
-data/prepared/customers_data_prepared.csv
-data/prepared/products_data_prepared.csv
-data/prepared/sales_data_prepared.csv
+OLAP Operations Completed
+1. Slice
 
-Output
-A complete SQLite DW file saved in data/dw/smart_sales.db.
+I created a bar chart with:
 
-How to Run
-Activate the virtual environment.
-Run the script from the project root:
-python src/analytics_project/etl_to_dw.py
+X axis: SaleDate
 
-Verification
-All tables load correctly.
-Data types match the warehouse schema.
-Foreign keys align with customer_id and product_id.
-The database opens in SQLite Viewer with populated tables.
+Y axis: SaleAmount
+
+Then I applied one filter (Count of SaleDate < 10) to isolate a small slice of the dataset.
+
+Why:
+A slice focuses on one dimension and gives a narrow view for quick analysis.
+
+2. Dice
+
+I created a column chart with:
+
+X axis: ProductID
+
+Y axis: Sum of SaleAmount
+
+Two filters were added:
+
+PaymentType = one value
+
+StoreID = one value
+
+Why:
+A dice operation uses two dimensions to create a more specific subset of the data.
+
+3. Drilldown
+
+I created a line chart with:
+
+X axis hierarchy: StoreID → ProductID
+
+Y axis: Sum of SaleAmount
+
+Drill mode was enabled, allowing movement from store-level to product-level details.
+
+Why:
+Drilldown lets the user move from general information to more detailed insights.
 
 Challenges
-Duplicate customer IDs caused integrity errors.
-The solution was to clean the CSV and regenerate a unique list.
-Column mismatches caused SQL errors.
-The solution was to align schema and CSV names exactly.
 
-Notes
-This DW prepares the project for dashboard creation, KPIs, and analysis.
-It follows best practices for a simple learning environment.
+Date column stored as text
+
+Limited fields suitable for date-hierarchy drilldown
+
+Solutions
+
+Used numeric hierarchy StoreID → ProductID instead
+
+Applied simple numeric filters to complete slice and dice
+
+Most Interesting
+
+Creating drilldown from two non-date fields
+
+Managing OLAP operations using only basic columns
+
+Would Explore Further
+
+Date dimension tables
+
+DAX calculations
+
+Advanced Power BI transformations
+
+Screenshots
+
+Include the following screenshots in Canvas:
+
+Model View
+
+Slice visual
+
+Dice visual
+
+Drilldown visual
